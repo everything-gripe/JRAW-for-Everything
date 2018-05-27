@@ -2,13 +2,16 @@ package net.dean.jraw.models
 
 import net.dean.jraw.references.PublicContributionReference
 import net.dean.jraw.references.Referenceable
-import java.util.*
+import java.util.Date
 
 /**
  * A contribution from a user to a subreddit (like a submission or a comment)
  */
 interface PublicContribution<out T: PublicContributionReference> :
     Created, Distinguishable, Gildable, Identifiable, Votable, Referenceable<T> {
+
+    /** Submissions are archived once they reach a certain age. At that point, they become unmodifiable */
+    val isArchived: Boolean
 
     /** Username of the user that created this model */
     val author: String

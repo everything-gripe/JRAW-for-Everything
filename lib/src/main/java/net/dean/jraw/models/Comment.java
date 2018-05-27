@@ -18,7 +18,6 @@ import java.util.Date;
 @AutoValue
 @RedditModel
 public abstract class Comment implements PublicContribution<CommentReference>, NestedIdentifiable, Serializable {
-    public abstract boolean isArchived();
 
     @Override
     @NotNull

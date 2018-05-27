@@ -24,9 +24,6 @@ public abstract class Submission implements PublicContribution<SubmissionReferen
     @Nullable
     @Json(name = "author_flair_text") public abstract String getAuthorFlairText();
 
-    /** Submissions are archived once they reach a certain age. At that point, they become unmodifiable */
-    @Json(name = "archived") public abstract boolean isArchived();
-
     /** If there is a logged in user and that user is able to give this submission gold */
     @Json(name = "can_gild") public abstract boolean isGildable();
 
