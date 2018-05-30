@@ -4,6 +4,8 @@ import com.google.auto.value.AutoValue;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+
+import net.dean.jraw.databind.Enveloped;
 import net.dean.jraw.databind.RedditModel;
 import net.dean.jraw.databind.UnixTime;
 import org.jetbrains.annotations.NotNull;
@@ -77,6 +79,12 @@ public abstract class Message implements Created, Distinguishable, Identifiable,
     @Nullable
     @Json(name = "link_title")
     public abstract String getLinkTitle();
+
+    /** Replies to this message, or null if it's ot a PM. */
+    @Nullable
+    @Json(name = "replies")
+    @Enveloped
+    public abstract Listing<Message> getReplies();
 
     public static JsonAdapter<Message> jsonAdapter(Moshi moshi) {
         return new AutoValue_Message.MoshiJsonAdapter(moshi);

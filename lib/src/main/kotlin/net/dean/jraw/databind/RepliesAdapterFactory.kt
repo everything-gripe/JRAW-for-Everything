@@ -3,6 +3,7 @@ package net.dean.jraw.databind
 import com.squareup.moshi.*
 import net.dean.jraw.models.Comment
 import net.dean.jraw.models.Listing
+import net.dean.jraw.models.Message
 import net.dean.jraw.models.NestedIdentifiable
 import java.lang.reflect.Type
 
@@ -34,16 +35,22 @@ import java.lang.reflect.Type
  * @author Matthew Dean
  */
 class RepliesAdapterFactory : JsonAdapter.Factory {
-    /** @inhertiDoc */
+    /** @inheritDoc */
     override fun create(type: Type, annotations: MutableSet<out Annotation>, moshi: Moshi): JsonAdapter<*>? {
-        if (type != TYPE)
-            return null
-
-        val delegate = moshi.nextAdapter<Listing<Comment>>(this, type, annotations)
-        return RepliesAdapter(delegate)
+        return when (type) {
+            COMMENT_TYPE -> {
+                val delegate = moshi.nextAdapter<Listing<Comment>>(this, type, annotations)
+                CommentRepliesAdapter(delegate)
+            }
+            MESSAGE_TYPE -> {
+                val delegate = moshi.nextAdapter<Listing<Message>>(this, type, annotations)
+                MessageRepliesAdapter(delegate)
+            }
+            else -> null
+        }
     }
 
-    private class RepliesAdapter(private val delegate: JsonAdapter<Listing<Comment>>) : JsonAdapter<Listing<Comment>>() {
+    private class CommentRepliesAdapter(private val delegate: JsonAdapter<Listing<Comment>>) : JsonAdapter<Listing<Comment>>() {
         override fun toJson(writer: JsonWriter, value: Listing<Comment>?) {
             delegate.toJson(writer, value)
         }
@@ -59,8 +66,28 @@ class RepliesAdapterFactory : JsonAdapter.Factory {
         }
     }
 
+    private class MessageRepliesAdapter(private val delegate: JsonAdapter<Listing<Message>>) : JsonAdapter<Listing<Message>>() {
+        override fun toJson(writer: JsonWriter, value: Listing<Message>?) {
+            delegate.toJson(writer, value)
+        }
+
+        override fun fromJson(reader: JsonReader): Listing<Message>? {
+            if (reader.peek() == JsonReader.Token.STRING) {
+                val contents = reader.nextString()
+                if (contents.isNotEmpty())
+                    throw IllegalArgumentException("Expected a Listing<Message> or an empty string, got \"$contents\" instead.")
+                return Listing.empty()
+            }
+            return delegate.fromJson(reader)
+        }
+    }
+
     /** */
     companion object {
-        @JvmStatic private val TYPE = Types.newParameterizedType(Listing::class.java, NestedIdentifiable::class.java)
+        @JvmStatic
+        private val COMMENT_TYPE = Types.newParameterizedType(Listing::class.java, NestedIdentifiable::class.java)
+
+        @JvmStatic
+        private val MESSAGE_TYPE = Types.newParameterizedType(Listing::class.java, Message::class.java)
     }
 }
