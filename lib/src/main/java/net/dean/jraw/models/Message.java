@@ -73,6 +73,11 @@ public abstract class Message implements Created, Distinguishable, Identifiable,
     @Override
     @Json(name = "likes") public abstract VoteDirection getVote();
 
+    /** The title of the submission where this comment was posted, or null if this message isn't a comment message. */
+    @Nullable
+    @Json(name = "link_title")
+    public abstract String getLinkTitle();
+
     public static JsonAdapter<Message> jsonAdapter(Moshi moshi) {
         return new AutoValue_Message.MoshiJsonAdapter(moshi);
     }
