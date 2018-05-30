@@ -94,6 +94,11 @@ public abstract class Comment implements PublicContribution<CommentReference>, N
     @Override
     @Json(name = "likes") public abstract VoteDirection getVote();
 
+    /** Path of the permalink to this comment, without 'https://reddit.com'. */
+    @NotNull
+    @Json(name = "permalink")
+    public abstract String getPermalink();
+
     @NotNull
     @Override
     public CommentReference toReference(@NotNull RedditClient reddit) {
