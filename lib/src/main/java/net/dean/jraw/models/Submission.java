@@ -4,15 +4,18 @@ import com.google.auto.value.AutoValue;
 import com.squareup.moshi.Json;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.databind.RedditModel;
 import net.dean.jraw.databind.UnixTime;
 import net.dean.jraw.references.SubmissionReference;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @AutoValue
 @RedditModel
@@ -170,6 +173,10 @@ public abstract class Submission implements PublicContribution<SubmissionReferen
 
     /** The number of comments posted in this post. Includes removed comments. */
     @Json(name = "num_comments") public abstract Integer getCommentCount();
+
+    /** Parent submission(s), from where this submission was cross-posted. */
+    @Nullable
+    @Json(name = "crosspost_parent_list") public abstract List<Submission> getCrosspostParents();
 
     @NotNull
     @Override
