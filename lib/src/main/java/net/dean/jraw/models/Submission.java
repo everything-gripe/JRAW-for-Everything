@@ -126,7 +126,8 @@ public abstract class Submission implements PublicContribution<SubmissionReferen
     @Json(name = "suggested_sort") public abstract CommentSort getSuggestedSort();
 
     /**
-     * An empty string for self posts, otherwise a reddit-generated-and-hosted thumbnail. Can rarely be null.
+     * A reddit-generated-and-hosted thumbnail when {@link #getThumbnailType()}
+     * is {@link ThumbnailType#URL}. Can rarely be null.
      *
      * @see #hasThumbnail()
      */
@@ -137,6 +138,10 @@ public abstract class Submission implements PublicContribution<SubmissionReferen
     public final boolean hasThumbnail() {
         String thumb = getThumbnail();
         return thumb != null && !thumb.isEmpty();
+    }
+
+    public ThumbnailType getThumbnailType() {
+        return ThumbnailType.parse(getThumbnail());
     }
 
     /** Title of the submission */
