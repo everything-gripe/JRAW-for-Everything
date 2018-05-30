@@ -6,7 +6,7 @@ import net.dean.jraw.models.Submission
 import net.dean.jraw.references.CommentsRequest
 
 /** A RootCommentNode is a special CommentNode dedicated to the tree's true root: the submission. */
-class RootCommentNode(submission: Submission, replies: Listing<NestedIdentifiable>, settings: CommentTreeSettings?) : AbstractCommentNode<Submission>(
+class RootCommentNode(submission: Submission, val children: Listing<NestedIdentifiable>, settings: CommentTreeSettings?) : AbstractCommentNode<Submission>(
     depth = 0,
     moreChildren = null,
     subject = submission,
@@ -18,6 +18,6 @@ class RootCommentNode(submission: Submission, replies: Listing<NestedIdentifiabl
     override val depth: Int = 0
 
     init {
-        initReplies(replies)
+        initReplies(children)
     }
 }
