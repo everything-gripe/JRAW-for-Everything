@@ -12,13 +12,16 @@ open class BarebonesPaginator<T : UniquelyIdentifiable> private constructor(
     reddit: RedditClient,
     baseUrl: String,
     limit: Int,
+    private val customAnchorFullName: String?,
     clazz: Class<T>
 ) : Paginator<T>(reddit, baseUrl, limit, clazz) {
 
     override fun createNextRequest(): HttpRequest.Builder {
         val args = mutableMapOf("limit" to limit.toString())
-        if (current?.nextName != null)
-            args.put("after", current!!.nextName!!)
+
+        val anchor = customAnchorFullName ?: current?.nextName
+        if (anchor != null)
+            args["after"] = anchor
 
         return reddit.requestStub()
             .path(baseUrl)
@@ -31,12 +34,16 @@ open class BarebonesPaginator<T : UniquelyIdentifiable> private constructor(
 
         /** How many items to request at once */
         private var limit: Int = Paginator.DEFAULT_LIMIT
+        private var customAnchorFullName: String? = null
 
         /** How many items to request at once */
         fun limit(limit: Int): Builder<T> { this.limit = limit; return this }
 
+        /** Sets a custom pagination anchor */
+        fun customAnchor(anchorFullName: String): Builder<T> { this.customAnchorFullName = anchorFullName; return this }
+
         override fun build(): BarebonesPaginator<T> =
-            BarebonesPaginator(reddit, baseUrl, limit, clazz)
+            BarebonesPaginator(reddit, baseUrl, limit, customAnchorFullName, clazz)
 
         /** */
         companion object {
