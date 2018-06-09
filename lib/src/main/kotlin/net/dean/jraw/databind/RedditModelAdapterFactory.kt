@@ -99,12 +99,13 @@ class RedditModelAdapterFactory(
             }
 
             // Reverse lookup the actual value of 'kind' from the registry
-            var actualKind: String? = null
-            for ((kind, clazz) in registry)
-                if (clazz == value.javaClass)
-                    actualKind = kind
-            if (actualKind == null)
-                throw IllegalArgumentException("No registered kind for Class '${value.javaClass}'")
+            val potentiallyAutoValueClazz = value::class.java
+            val actualKind = registry
+                    .filter { it.value.isAssignableFrom(potentiallyAutoValueClazz) }
+                    .map { it.key }
+                    .firstOrNull()
+                    ?: throw IllegalArgumentException("No registered kind for Class '${value.javaClass}'")
+
             delegate.toJson(writer, RedditModelEnvelope.create(actualKind, value))
         }
 
