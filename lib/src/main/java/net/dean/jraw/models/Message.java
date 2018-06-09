@@ -55,6 +55,7 @@ public abstract class Message implements Created, Distinguishable, Identifiable,
 
     /** The full name of the comment or PM that is the predecessor to this one. */
     @Nullable
+    @Json(name = "parent_id")
     public abstract String getParentId();
 
     /** The subject line of the private message, or the string "`comment reply`" for comments. */
