@@ -16,7 +16,7 @@ import net.dean.jraw.models.PersistedAuthData
  * TokenStore could be missing out on some data.
  */
 abstract class DeferredPersistentTokenStore @JvmOverloads constructor(
-    initialData: Map<String, PersistedAuthData> = mapOf()
+        initialData: Map<String, PersistedAuthData> = mapOf()
 ) : TokenStore {
     private var memoryData: MutableMap<String, PersistedAuthData> = initialData.toMutableMap()
     private var lastPersistedData: Map<String, PersistedAuthData>? = null
@@ -41,8 +41,8 @@ abstract class DeferredPersistentTokenStore @JvmOverloads constructor(
     fun persist() {
         // Do less work in the long run
         val actualData = memoryData
-            .mapValues { it.value.simplify() }
-            .filterValuesNotNull()
+                .mapValues { it.value.simplify() }
+                .filterValuesNotNull()
 
         val result = doPersist(actualData)
         this.lastPersistedData = HashMap(memoryData)
@@ -56,9 +56,9 @@ abstract class DeferredPersistentTokenStore @JvmOverloads constructor(
     fun load() {
         // Don't include insignificant data
         this.memoryData = doLoad()
-            .mapValues { it.value.simplify() }
-            .filterValuesNotNull()
-            .toMutableMap()
+                .mapValues { it.value.simplify() }
+                .filterValuesNotNull()
+                .toMutableMap()
     }
 
     /**
@@ -99,6 +99,10 @@ abstract class DeferredPersistentTokenStore @JvmOverloads constructor(
     }
 
     override final fun storeRefreshToken(username: String, token: String) {
+        if (token.isBlank()) {
+            throw AssertionError("Empty refresh token is being stored")
+        }
+
         if (username == AuthManager.USERNAME_UNKOWN)
             throw IllegalArgumentException("Refusing to store data for unknown username")
         val stored = this.memoryData[username]
@@ -135,8 +139,10 @@ abstract class DeferredPersistentTokenStore @JvmOverloads constructor(
 
         if (saved.latest == null)
             memoryData.remove(username)
-        else
+        else {
+            Exception("Deleting refresh token").printStackTrace()
             memoryData[username] = PersistedAuthData.create(saved.latest, null)
+        }
 
         if (autoPersist && this.hasUnsaved())
             persist()

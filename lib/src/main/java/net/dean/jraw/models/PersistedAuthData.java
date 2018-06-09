@@ -3,6 +3,7 @@ package net.dean.jraw.models;
 import com.google.auto.value.AutoValue;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -21,10 +22,10 @@ public abstract class PersistedAuthData implements Serializable {
 
     /**
      * Attempts to simplify the data contained in this reference.
-     *
+     * <p>
      * Returns null if this object is not significant ({@link #isSignificant()} returns false). If the OAuthData is
      * expired, this method returns a new object with a null OAuthData.
-     *
+     * <p>
      * If nothing can be simplified, this object is returned.
      */
     @Nullable
@@ -47,6 +48,9 @@ public abstract class PersistedAuthData implements Serializable {
     }
 
     public static PersistedAuthData create(@Nullable OAuthData current, @Nullable String refreshToken) {
+        if (refreshToken == null) {
+            new Exception("Storing null refresh token").printStackTrace();
+        }
         return new AutoValue_PersistedAuthData(current, refreshToken);
     }
 
