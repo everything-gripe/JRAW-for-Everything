@@ -47,6 +47,10 @@ public abstract class Account implements Created, Referenceable<UserReference<?>
     /** The name chosen for this account by a real person */
     @Json(name = "name") public abstract String getName();
 
+    /** URL to user's avatar */
+    @Json(name = "icon_img")
+    public abstract String getIcon();
+
     // TODO: a lot more properties for logged-in users (see /api/v1/me)
 
     @NotNull
