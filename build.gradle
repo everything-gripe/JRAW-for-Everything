@@ -40,7 +40,7 @@ subprojects {
 
     sourceCompatibility = JavaVersion.VERSION_1_7
     targetCompatibility = JavaVersion.VERSION_1_7
-    group = 'net.dean.jraw'
+    group = 'io.github.absurdlysuspicious'
     version = '1.1.0'
 
     repositories {
