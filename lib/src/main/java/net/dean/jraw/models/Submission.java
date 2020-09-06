@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @AutoValue
 @RedditModel
@@ -51,6 +52,14 @@ public abstract class Submission implements PublicContribution<SubmissionReferen
     @Override
     @Nullable
     @UnixTime public abstract Date getEdited();
+
+    @Json(name = "is_gallery") public abstract boolean isGallery();
+
+    @Nullable
+    @Json(name = "gallery_data") public abstract GalleryData getGalleryData();
+
+    @Nullable
+    @Json(name = "media_metadata") public abstract Map<String, MediaMetadataItem> getMediaMetadata();
 
     /** Any external media picked up by reddit */
     @Nullable
