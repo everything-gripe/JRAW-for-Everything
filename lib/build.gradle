@@ -2,7 +2,6 @@ import net.dean.jraw.gradle.GitbookPush
 import net.dean.jraw.gradle.VersionCommitTask
 
 apply plugin: 'org.jetbrains.dokka'
-apply plugin: 'net.ltgt.apt-idea'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
@@ -10,11 +9,11 @@ apply plugin: 'maven'
 ext.projectName = 'JRAW'
 
 dependencies {
-    compile "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 
     def moshi = "com.squareup.moshi:moshi:$moshiVersion"
-    compile moshi
-    testCompile("com.squareup.moshi:moshi-kotlin:$moshiVersion") {
+    implementation moshi
+    testImplementation("com.squareup.moshi:moshi-kotlin:$moshiVersion") {
         exclude group: 'com.squareup.moshi'
     }
 
@@ -30,10 +29,10 @@ dependencies {
         exclude group: 'com.squareup.moshi'
     }
 
-    testCompile "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
-    testCompile 'net.sourceforge.htmlunit:htmlunit:2.29'
-    testCompile "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
-    testCompile 'org.reflections:reflections:0.9.10'
+    testImplementation "com.squareup.okhttp3:mockwebserver:$okhttpVersion"
+    testImplementation 'net.sourceforge.htmlunit:htmlunit:2.29'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    testImplementation 'org.reflections:reflections:0.9.10'
 }
 
 sourceSets {
