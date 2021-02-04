@@ -43,29 +43,9 @@ sourceSets {
     }
 }
 
-dokka {
-    moduleName = 'jraw'
-    jdkVersion = 7
-    impliedPlatforms = ['JVM']
-    reportUndocumented = true
-    outputFormat = 'javadoc'
-    includes = ['packages.md']
-
-    linkMapping {
-        dir = file('src/main/kotlin')
-        url = 'https://github.com/mattbdean/JRAW/tree/master/lib/src/main/kotlin'
-        suffix = '#L'
-    }
-}
-
-// Don't build in Travis to reduce spam. Remove when dokka 0.9.16 comes out.
-if (System.getenv("TRAVIS")) {
-    dokka.enabled = false
-}
-
-task javadocJar(type: Jar, dependsOn: dokka) {
+task javadocJar(type: Jar, dependsOn: dokkaJavadoc) {
     classifier = 'javadoc'
-    from dokka.outputDirectory
+    from dokkaJavadoc.outputDirectory
     baseName = projectName
 }
 

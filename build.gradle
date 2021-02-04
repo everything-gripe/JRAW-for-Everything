@@ -5,7 +5,7 @@ buildscript {
     ext.spekVersion = '1.1.5'
     ext.moshiVersion = '1.11.0'
     ext.autoValueVersion = '1.5.4'
-    ext.dokkaVersion = '0.9.17'
+    ext.dokkaVersion = '1.4.20'
     ext.okhttpVersion = '4.8.1'
 
     repositories {
