@@ -9,6 +9,7 @@ import net.dean.jraw.oauth.Credentials
 import net.dean.jraw.oauth.TokenStore
 import net.dean.jraw.ratelimit.NoopRateLimiter
 import okhttp3.*
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import java.util.*
@@ -57,7 +58,7 @@ class MockNetworkAdapter : NetworkAdapter {
     }
 
     override fun execute(r: HttpRequest): HttpResponse {
-        val path = HttpUrl.parse(r.url)!!.encodedPath()
+        val path = r.url.toHttpUrl().encodedPath
 
         val res = http.newCall(Request.Builder()
             .headers(r.headers)

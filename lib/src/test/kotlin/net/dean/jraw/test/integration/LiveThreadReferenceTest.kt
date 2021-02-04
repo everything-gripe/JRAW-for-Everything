@@ -59,12 +59,11 @@ class LiveThreadReferenceTest : Spek({
                     updateEvents.add(update)
                 }
 
-                override fun onFailure(webSocket: WebSocket?, t: Throwable?, response: Response?) {
-                    t?.printStackTrace()
-                    t.should.be.`null`
+                override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
+                    t.printStackTrace()
                 }
 
-                override fun onClosed(webSocket: WebSocket?, code: Int, reason: String?) {
+                override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
                     println("closed ($code): $reason")
                 }
             })

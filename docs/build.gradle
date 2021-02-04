@@ -5,6 +5,7 @@ apply plugin: 'kotlin'
 ext.bookOutDir = file("build/docs").absoluteFile
 
 dependencies {
+    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
     implementation 'com.thoughtworks.qdox:qdox:2.0-M6'
     implementation 'org.reflections:reflections:0.9.10'
     implementation "com.squareup.moshi:moshi:$moshiVersion"

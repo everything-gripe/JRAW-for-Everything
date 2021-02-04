@@ -13,16 +13,16 @@ import okhttp3.Response
  */
 data class HttpResponse(val raw: Response) {
     /** The request that was responsible for creating this response */
-    val request: Request = raw.request()
+    val request: Request = raw.request
 
     /** HTTP status code (200, 404, etc.) */
-    val code: Int = raw.code()
+    val code: Int = raw.code
 
     /** If the status code is in the range 200..299 */
     val successful: Boolean = raw.isSuccessful
 
     /** Lazily initialized response body, or an empty string if there was none */
-    val body: String by lazy { raw.body()?.string() ?: "" }
+    val body: String by lazy { raw.body?.string() ?: "" }
 
     /**
      * Uses Jackson to deserialize the body of this response to a given type

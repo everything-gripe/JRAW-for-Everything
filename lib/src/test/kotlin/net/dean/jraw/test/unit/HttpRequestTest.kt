@@ -4,7 +4,8 @@ import com.winterbe.expekt.should
 import net.dean.jraw.Endpoint
 import net.dean.jraw.http.HttpRequest
 import net.dean.jraw.test.expectException
-import okio.Okio
+import okio.buffer
+import okio.sink
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.it
 import java.io.ByteArrayOutputStream
@@ -115,7 +116,7 @@ class HttpRequestTest: Spek({
 
         // Write the form body to a UTF-8 string
         val out = ByteArrayOutputStream()
-        val sink = Okio.buffer(Okio.sink(out))
+        val sink = out.sink().buffer()
         r.body!!.writeTo(sink)
         sink.flush()
 

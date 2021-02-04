@@ -7,7 +7,7 @@ import net.dean.jraw.oauth.AuthManager
 import net.dean.jraw.oauth.AuthMethod
 import net.dean.jraw.oauth.NoopTokenStore
 import net.dean.jraw.test.*
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -132,7 +132,7 @@ class AccountHelperTest : Spek({
             val helper = AccountHelper(mockAdapter, creds, tokenStore, uuid)
 
             val statefulHelper = helper.switchToNewUser()
-            val url = HttpUrl.parse(statefulHelper.getAuthorizationUrl(scopes = *arrayOf("foo")))!!
+            val url = statefulHelper.getAuthorizationUrl(scopes = arrayOf("foo")).toHttpUrl()
             val state = url.queryParameter("state")!!
 
             val mockedRedirectUrl = "https://google.com/?state=$state&code=mocked_code"

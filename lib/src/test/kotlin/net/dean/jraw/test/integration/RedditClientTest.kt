@@ -10,7 +10,7 @@ import net.dean.jraw.oauth.OAuthHelper
 import net.dean.jraw.pagination.Paginator
 import net.dean.jraw.test.*
 import net.dean.jraw.test.TestConfig.reddit
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -63,8 +63,8 @@ class RedditClientTest : Spek({
                     .rawJson(false)
                     .build())
 
-                val url = HttpUrl.parse(adapter.history.first().url)!!
-                url.queryParameterNames().should.not.contain("raw_json")
+                val url = adapter.history.first().url.toHttpUrl()
+                url.queryParameterNames.should.not.contain("raw_json")
             }
 
             it("should add raw_json=1 to the query when rawJson is true") {
@@ -72,7 +72,7 @@ class RedditClientTest : Spek({
                     .url("https://foo.bar")
                     .build())
 
-                val url = HttpUrl.parse(adapter.history.first().url)!!
+                val url = adapter.history.first().url.toHttpUrl()
                 url.queryParameterValues("raw_json").should.equal(listOf("1"))
             }
 
@@ -81,7 +81,7 @@ class RedditClientTest : Spek({
                     .url("https://foo.bar/?raw_json=1")
                     .build())
 
-                val url = HttpUrl.parse(adapter.history.first().url)!!
+                val url = adapter.history.first().url.toHttpUrl()
                 url.queryParameterValues("raw_json").should.equal(listOf("1"))
             }
         }

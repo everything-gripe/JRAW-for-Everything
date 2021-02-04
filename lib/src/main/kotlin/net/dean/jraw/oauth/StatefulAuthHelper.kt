@@ -8,6 +8,7 @@ import net.dean.jraw.http.NetworkException
 import net.dean.jraw.models.OAuthData
 import net.dean.jraw.models.internal.OAuthDataJson
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import java.math.BigInteger
 import java.net.URL
 import java.security.SecureRandom
@@ -81,7 +82,7 @@ class StatefulAuthHelper internal constructor(
      * app.
      */
     fun isFinalRedirectUrl(url: String): Boolean {
-        val httpUrl = HttpUrl.parse(url) ?: throw IllegalArgumentException("Malformed URL: $url")
+        val httpUrl = url.toHttpUrlOrNull() ?: throw IllegalArgumentException("Malformed URL: $url")
         creds.redirectUrl ?: throw IllegalStateException("Given credentials have no redirect URL")
 
         return httpUrl.toString().startsWith(creds.redirectUrl) && httpUrl.queryParameter("state") != null

@@ -25,7 +25,7 @@ class OkHttpNetworkAdapter @JvmOverloads constructor(
             .build(), listener)
 
         // Shutdown the ExecutorService so this program can terminate normally
-        client.dispatcher().executorService().shutdown()
+        client.dispatcher.executorService.shutdown()
 
         return ws
     }

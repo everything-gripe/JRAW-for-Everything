@@ -10,6 +10,8 @@ import net.dean.jraw.models.Votable
 import net.dean.jraw.pagination.Paginator
 import net.dean.jraw.test.TestConfig.userAgent
 import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.jetbrains.spek.api.dsl.SpecBody
 import org.jetbrains.spek.api.dsl.TestBody
 import org.jetbrains.spek.api.dsl.it
@@ -140,7 +142,7 @@ class SpyNetworkAdapter : NetworkAdapter {
             .request(Request.Builder()
                 .url("https://foo.bae")
                 .build())
-            .body(ResponseBody.create(MediaType.parse("text/plain"), "Response from SpyNetworkAdapter"))
+            .body("Response from SpyNetworkAdapter".toResponseBody("text/plain".toMediaType()))
             .protocol(Protocol.HTTP_1_1)
             .code(200)
             .message("OK")

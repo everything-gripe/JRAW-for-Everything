@@ -67,8 +67,8 @@ class SimpleHttpLogger @JvmOverloads constructor(
     }
 
     private fun formatContentType(res: Response): String {
-        val type = res.body()?.contentType() ?: return NO_CONTENT_TYPE
-        return type.type() + '/' + type.subtype()
+        val type = res.body?.contentType() ?: return NO_CONTENT_TYPE
+        return type.type + '/' + type.subtype
     }
 
     private fun parseForm(r: HttpRequest): Map<String, String> {
@@ -76,7 +76,7 @@ class SimpleHttpLogger @JvmOverloads constructor(
 
         val type = r.body.contentType()!!
         // Make sure we have URL-encoded data before we try to parse it
-        if (type.type() != "application" || type.subtype() != "x-www-form-urlencoded") return mapOf()
+        if (type.type != "application" || type.subtype != "x-www-form-urlencoded") return mapOf()
 
         return JrawUtils.parseUrlEncoded(readRequestBody(r.body))
     }

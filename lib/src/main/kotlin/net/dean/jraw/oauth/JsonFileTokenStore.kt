@@ -5,6 +5,9 @@ import com.squareup.moshi.Types
 import net.dean.jraw.JrawUtils
 import net.dean.jraw.models.PersistedAuthData
 import okio.Okio
+import okio.buffer
+import okio.sink
+import okio.source
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.IOException
@@ -57,7 +60,7 @@ class JsonFileTokenStore @JvmOverloads constructor(
                 throw IOException("Unable to create parent directory $parent")
         }
 
-        val sink = Okio.buffer(Okio.sink(saveLocation))
+        val sink = saveLocation.sink().buffer()
         adapter.toJson(sink, data)
         sink.close()
     }
@@ -66,7 +69,7 @@ class JsonFileTokenStore @JvmOverloads constructor(
         if (!saveLocation.isFile)
             throw FileNotFoundException("Not a file or doesn't exist: ${saveLocation.absolutePath}")
 
-        return adapter.fromJson(Okio.buffer(Okio.source(saveLocation)))!!
+        return adapter.fromJson(saveLocation.source().buffer())!!
     }
 
     /** */

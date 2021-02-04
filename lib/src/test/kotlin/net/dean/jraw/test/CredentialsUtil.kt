@@ -3,7 +3,8 @@ package net.dean.jraw.test
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import net.dean.jraw.oauth.Credentials
-import okio.Okio
+import okio.buffer
+import okio.source
 import java.util.*
 
 object CredentialsUtil {
@@ -46,7 +47,7 @@ object CredentialsUtil {
 
     private fun getLocalCredentials(): TestingCredentials {
         try {
-            val source = Okio.buffer(Okio.source(getLocalCredentialStream()))
+            val source = getLocalCredentialStream().source().buffer()
             return Moshi.Builder()
                 .add(KotlinJsonAdapterFactory())
                 .build()

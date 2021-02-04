@@ -2,7 +2,8 @@ package net.dean.jraw.docs
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import okio.Okio
+import okio.buffer
+import okio.source
 import java.io.File
 import java.io.IOException
 
@@ -47,7 +48,7 @@ class BookBuilder(samplesDir: File, private val contentDir: File) {
             .failOnUnknown()
             .nullSafe()
 
-        val pages = chapterAdapter.fromJson(Okio.buffer(Okio.source(tocFile)))!!
+        val pages = chapterAdapter.fromJson(tocFile.source().buffer())!!
         val compiled = compile(pages)
 
         if (!outputDir.isDirectory && !outputDir.mkdirs())

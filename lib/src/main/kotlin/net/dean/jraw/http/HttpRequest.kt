@@ -6,6 +6,7 @@ import net.dean.jraw.http.HttpRequest.Builder
 import okhttp3.FormBody
 import okhttp3.Headers
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.RequestBody
 import java.util.*
 import java.util.regex.Matcher
@@ -124,7 +125,7 @@ class HttpRequest internal constructor(
         /**
          * String variant for ease of use. Equivalent to `url(HttpUrl.parse(urlString))
          */
-        fun url(url: String) = url(HttpUrl.parse(url)!!)
+        fun url(url: String) = url(url.toHttpUrl())
 
         /** Overwrites all previously set headers with the ones given */
         fun headers(headers: Headers): Builder { this.headers = headers.newBuilder(); return this }

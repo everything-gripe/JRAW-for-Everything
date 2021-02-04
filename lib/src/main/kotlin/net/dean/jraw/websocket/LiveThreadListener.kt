@@ -16,13 +16,12 @@ abstract class LiveThreadListener : WebSocketListener() {
     abstract fun onUpdate(update: LiveWebSocketUpdate)
 
     /** */
-    override fun onMessage(webSocket: WebSocket?, bytes: ByteString?) {
-        onMessage(webSocket, bytes?.utf8())
+    override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
+        onMessage(webSocket, bytes.utf8())
     }
 
     /** */
-    override fun onMessage(webSocket: WebSocket?, text: String?) {
-        if (text == null) return
+    override fun onMessage(webSocket: WebSocket, text: String) {
         val update = adapter.fromJson(text)!!
         onUpdate(update)
     }

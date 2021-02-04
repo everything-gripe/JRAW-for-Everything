@@ -3,7 +3,7 @@ package net.dean.jraw.test.unit
 import com.winterbe.expekt.should
 import net.dean.jraw.addQueryParameters
 import net.dean.jraw.filterValuesNotNull
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -41,7 +41,7 @@ class ExtensionsTest : Spek({
 
     describe("HttpUrl.addQueryParameters") {
         it("should only add non-null values") {
-            val b = HttpUrl.parse("https://example.com")!!.newBuilder()
+            val b = "https://example.com".toHttpUrl().newBuilder()
 
             val query = mapOf(
                 "non_null" to "foo",
@@ -55,7 +55,7 @@ class ExtensionsTest : Spek({
         }
 
         it("should add, not just set") {
-            val url = HttpUrl.parse("https://example.com?non_null=foo")!!
+            val url = "https://example.com?non_null=foo".toHttpUrl()
                 .newBuilder()
                 .addQueryParameters(mapOf("non_null" to "bar"))
                 .build()

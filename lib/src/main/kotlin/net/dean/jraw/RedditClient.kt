@@ -14,7 +14,7 @@ import net.dean.jraw.pagination.SubredditSearchPaginator
 import net.dean.jraw.ratelimit.LeakyBucketRateLimiter
 import net.dean.jraw.ratelimit.RateLimiter
 import net.dean.jraw.references.*
-import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.WebSocket
 import okhttp3.WebSocketListener
 import java.util.concurrent.TimeUnit
@@ -140,7 +140,7 @@ class RedditClient internal constructor(
 
         // Add the raw_json=1 query parameter if requested
         if (req.rawJson) {
-            val url = HttpUrl.parse(req.url)!!
+            val url = req.url.toHttpUrl()
             // Make sure we specify a value for raw_json exactly once
 
             var newUrl = url.newBuilder()
@@ -173,10 +173,10 @@ class RedditClient internal constructor(
             return request(req, retryCount + 1)
         }
 
-        val type = res.raw.body()?.contentType()
+        val type = res.raw.body?.contentType()
 
         // Try to find any API errors embedded in the JSON document
-        if (type != null && type.type() == "application" && type.subtype() == "json") {
+        if (type != null && type.type == "application" && type.subtype == "json") {
             // Make the adapter lenient so we're not required to read the entire body
             val adapter = JrawUtils.adapter<RedditExceptionStub<*>>().lenient()
             val stub = if (res.body == "") null else adapter.fromJson(res.body)

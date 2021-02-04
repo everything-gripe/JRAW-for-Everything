@@ -9,7 +9,9 @@ import net.dean.jraw.oauth.JsonFileTokenStore
 import net.dean.jraw.test.createMockOAuthData
 import net.dean.jraw.test.expectException
 import net.dean.jraw.test.randomName
-import okio.Okio
+import okio.buffer
+import okio.sink
+import okio.source
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it
@@ -28,7 +30,7 @@ class JsonFileTokenStoreTest : Spek({
                 // Write the given data
                 val adapter = JrawUtils.moshi.adapter<Map<String, PersistedAuthData>>(
                     Types.newParameterizedType(Map::class.java, String::class.java, PersistedAuthData::class.java))
-                val sink = Okio.buffer(Okio.sink(tmp))
+                val sink = tmp.sink().buffer()
                 adapter.indent("  ").toJson(sink, data)
                 sink.close()
             } else {
@@ -57,7 +59,7 @@ class JsonFileTokenStoreTest : Spek({
             val adapter: JsonAdapter<Map<String, PersistedAuthData>> =
                 JrawUtils.moshi.adapter(Types.newParameterizedType(Map::class.java, String::class.java, PersistedAuthData::class.java))
 
-            adapter.fromJson(Okio.buffer(Okio.source(f))).should.equal(data)
+            adapter.fromJson(f.source().buffer()).should.equal(data)
         }
     }
 

@@ -6,5 +6,5 @@ package net.dean.jraw.http
  * @property res The response that initiated this exception
  */
 class NetworkException(val res: HttpResponse): RuntimeException(
-    "HTTP request created unsuccessful response: ${res.request.method()} ${res.request.url()} -> ${res.code}"
+    "HTTP request created unsuccessful response: ${res.request.method} ${res.request.url} -> ${res.code}"
 )

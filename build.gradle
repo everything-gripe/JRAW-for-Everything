@@ -6,7 +6,7 @@ buildscript {
     ext.moshiVersion = '1.11.0'
     ext.autoValueVersion = '1.5.4'
     ext.dokkaVersion = '0.9.17'
-    ext.okhttpVersion = '3.10.0'
+    ext.okhttpVersion = '4.8.1'
 
     repositories {
         jcenter()

@@ -12,7 +12,7 @@ import net.dean.jraw.models.internal.RedditModelEnvelope
 import net.dean.jraw.models.internal.TrophyList
 import net.dean.jraw.pagination.BarebonesPaginator
 import net.dean.jraw.pagination.DefaultPaginator
-import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 
 /**
@@ -198,7 +198,7 @@ class SelfUserReference(reddit: RedditClient) : UserReference<SelfUserFlairRefer
     @EndpointImplementation(Endpoint.PATCH_ME_PREFS)
     @Throws(ApiException::class)
     fun patchPrefs(newPrefs: Map<String, Any>): Map<String, Any> {
-        val body = RequestBody.create(MediaType.parse("application/json"), prefsAdapter.toJson(newPrefs))
+        val body = RequestBody.create("application/json".toMediaType(), prefsAdapter.toJson(newPrefs))
         return reddit.request { it.endpoint(Endpoint.PATCH_ME_PREFS).patch(body) }.deserialize()
     }
 
