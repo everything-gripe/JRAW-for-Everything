@@ -1,7 +1,6 @@
 package net.dean.jraw.tree
 
 import java.util.*
-import kotlin.coroutines.experimental.buildSequence
 
 object TreeTraverser {
     fun traverse(root: CommentNode<*>, order: TreeTraversalOrder): Sequence<CommentNode<*>> {
@@ -12,7 +11,7 @@ object TreeTraverser {
         }
     }
 
-    private fun preOrder(base: CommentNode<*>): Sequence<CommentNode<*>> = buildSequence {
+    private fun preOrder(base: CommentNode<*>): Sequence<CommentNode<*>> = sequence {
         val stack = ArrayDeque<CommentNode<*>>()
         stack.add(base)
 
@@ -29,7 +28,7 @@ object TreeTraverser {
         }
     }
 
-    private fun postOrder(base: CommentNode<*>): Sequence<CommentNode<*>> = buildSequence {
+    private fun postOrder(base: CommentNode<*>): Sequence<CommentNode<*>> = sequence {
         // Post-order traversal isn't going to be as fast as the other methods, this traversal method discovers elements
         // in reverse order and sorts them using a stack. Instead of finding the next node and yielding it, we find the
         // entire sequence and yield all elements right then and there
@@ -52,7 +51,7 @@ object TreeTraverser {
         yieldAll(visited)
     }
 
-    private fun breadthFirst(base: CommentNode<*>): Sequence<CommentNode<*>> = buildSequence {
+    private fun breadthFirst(base: CommentNode<*>): Sequence<CommentNode<*>> = sequence {
         val queue = ArrayDeque<CommentNode<*>>()
         var node: CommentNode<*>
 

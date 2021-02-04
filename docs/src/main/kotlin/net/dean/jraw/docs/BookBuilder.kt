@@ -28,10 +28,10 @@ class BookBuilder(samplesDir: File, private val contentDir: File) {
 
     private fun createSummaryFileContents(chapters: List<Chapter>): List<String> {
         val sb = StringBuilder()
-        sb.appendln("# Summary\n")
+        sb.appendLine("# Summary\n")
 
         for (chapter in chapters) {
-            sb.appendln("* [${chapter.title}](${chapter.file}.md)")
+            sb.appendLine("* [${chapter.title}](${chapter.file}.md)")
         }
 
         return sb.split("\n")

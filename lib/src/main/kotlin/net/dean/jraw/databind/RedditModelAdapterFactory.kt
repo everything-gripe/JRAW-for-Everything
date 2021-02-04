@@ -147,7 +147,7 @@ class RedditModelAdapterFactory(
                 return
             }
 
-            val potentiallyAutoValueClazz = (value as Any)::class.java
+            val potentiallyAutoValueClazz = value!!::class.java
 
             val kind = registry
                     .filter { it.value.isAssignableFrom(potentiallyAutoValueClazz) }

@@ -11,8 +11,7 @@ ext.projectName = 'JRAW'
 dependencies {
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
 
-    def moshi = "com.squareup.moshi:moshi:$moshiVersion"
-    implementation moshi
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
     testImplementation("com.squareup.moshi:moshi-kotlin:$moshiVersion") {
         exclude group: 'com.squareup.moshi'
     }
@@ -20,7 +19,6 @@ dependencies {
     kapt('com.ryanharter.auto.value:auto-value-moshi:0.4.5') {
         exclude group: 'com.squareup.moshi'
     }
-    kapt moshi
     kapt "com.google.auto.value:auto-value:$autoValueVersion"
     kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
@@ -131,10 +129,4 @@ if (!hasProperty("authorizeRelease") || property("authorizeRelease") != project.
     def val = hasProperty("authorizeRelease") ? property("authorizeRelease") : "(missing)"
     [release, createVersionTask, pushReleaseDocs, bintrayUpload]*.enabled = false
     println("Release disabled, expected property 'authorizeRelease' to equal ${project.version}, was ${val}")
-}
-
-kotlin {
-    experimental {
-        coroutines "enable"
-    }
 }

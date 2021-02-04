@@ -1,9 +1,9 @@
 import java.util.stream.Collectors
 
 buildscript {
-    ext.kotlinVersion = '1.2.41'
+    ext.kotlinVersion = '1.4.30'
     ext.spekVersion = '1.1.5'
-    ext.moshiVersion = '1.6.0'
+    ext.moshiVersion = '1.11.0'
     ext.autoValueVersion = '1.5.4'
     ext.dokkaVersion = '0.9.17'
     ext.okhttpVersion = '3.10.0'
@@ -44,7 +44,6 @@ subprojects {
     }
 
     dependencies {
-        compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
         testCompile 'com.winterbe:expekt:0.5.0'
         testCompile ("org.jetbrains.spek:spek-api:$spekVersion") {
@@ -52,13 +51,6 @@ subprojects {
         }
         testRuntime 'org.junit.platform:junit-platform-engine:1.0.0'
         testRuntime "org.jetbrains.spek:spek-junit-platform-engine:$spekVersion"
-    }
-
-    compileKotlin {
-        kotlinOptions {
-            apiVersion = "1.1"
-            languageVersion = "1.1"
-        }
     }
 
     junitPlatform {
