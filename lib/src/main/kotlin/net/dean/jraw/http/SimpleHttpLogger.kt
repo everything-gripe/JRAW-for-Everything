@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * Here's an example of the 12th request logged by a [SimpleHttpLogger]
  *
  * ```
- * [12 ->] POST https://oauth.reddit.com/foo?bar=baz
+ * [12 ->] POST https://oauth.everything.gripe/foo?bar=baz
  *         form: form=foo
  *               abc=123
  * [12 <-] 200 application/json: '{"foo":"bar"}'

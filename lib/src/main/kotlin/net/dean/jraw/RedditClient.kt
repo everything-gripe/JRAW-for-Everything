@@ -20,7 +20,7 @@ import okhttp3.WebSocketListener
 import java.util.concurrent.TimeUnit
 
 /**
- * Specialized class for sending requests to [oauth.reddit.com](https://www.reddit.com/dev/api/oauth).
+ * Specialized class for sending requests to [oauth.everything.gripe](https://www.reddit.com/dev/api/oauth).
  *
  * RedditClients cannot be instantiated directly through the public API. See the
  * [OAuthHelper][net.dean.jraw.oauth.OAuthHelper] class.
@@ -93,7 +93,7 @@ class RedditClient internal constructor(
         // make the request and parse the response.
         authManager.currentUsername = overrideUsername ?: try {
                 val me = request(HttpRequest.Builder()
-                    .url("https://oauth.reddit.com/api/v1/me")
+                    .url("https://oauth.everything.gripe/api/v1/me")
                     .header("Authorization", "bearer ${initialOAuthData.accessToken}")
                     .build()).deserialize<Map<*, *>>()
 
@@ -110,12 +110,12 @@ class RedditClient internal constructor(
     }
 
     /**
-     * Creates a [HttpRequest.Builder], setting `secure(true)`, `host("oauth.reddit.com")`, and the Authorization header
+     * Creates a [HttpRequest.Builder], setting `secure(true)`, `host("oauth.everything.gripe")`, and the Authorization header
      */
     fun requestStub(): HttpRequest.Builder {
         return HttpRequest.Builder()
             .secure(true)
-            .host("oauth.reddit.com")
+            .host("oauth.everything.gripe")
             .header("Authorization", "bearer ${authManager.accessToken}")
     }
 
@@ -235,7 +235,7 @@ class RedditClient internal constructor(
      * }
      * ```
      *
-     * This will execute `POST https://oauth.reddit.com/api/v1/foo` with the headers 'X-Foo: Bar' and
+     * This will execute `POST https://oauth.everything.gripe/api/v1/foo` with the headers 'X-Foo: Bar' and
      * 'Authorization: bearer $accessToken' and a form body of `baz=qux`.
      *
      * For reference, this same request can be executed like this:

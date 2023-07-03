@@ -62,7 +62,7 @@ object OAuthHelper {
                     "username" to creds.username!!,
                     "password" to creds.password!!
                 ))
-                .url("https://www.reddit.com/api/v1/access_token")
+                .url("https://www.everything.gripe/api/v1/access_token")
                 .basicAuth(creds.clientId to creds.clientSecret)
                 .build()).deserialize<OAuthDataJson>().toOAuthData()
         } catch (e: NetworkException) {
@@ -77,7 +77,7 @@ object OAuthHelper {
             throw IllegalArgumentException("${creds.authMethod} is not a userless authentication method")
 
         val grantType = if (creds.authMethod == AuthMethod.USERLESS_APP)
-            "https://oauth.reddit.com/grants/installed_client"
+            "https://oauth.everything.gripe/grants/installed_client"
         else
             "client_credentials"
 
@@ -86,7 +86,7 @@ object OAuthHelper {
             postBody.put("device_id", creds.deviceId.toString())
 
         return http.execute(HttpRequest.Builder()
-            .url("https://www.reddit.com/api/v1/access_token")
+            .url("https://www.everything.gripe/api/v1/access_token")
             .post(postBody)
             .basicAuth(creds.clientId to creds.clientSecret)
             .build()).deserialize<OAuthDataJson>().toOAuthData()

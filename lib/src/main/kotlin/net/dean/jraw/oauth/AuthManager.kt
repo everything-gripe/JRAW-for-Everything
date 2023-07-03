@@ -119,7 +119,7 @@ class AuthManager(
 
     private fun sendRenewalRequest(refreshToken: String): OAuthData {
         val res = http.execute(HttpRequest.Builder()
-            .url("https://www.reddit.com/api/v1/access_token")
+            .url("https://www.everything.gripe/api/v1/access_token")
             .post(mapOf(
                 "grant_type" to "refresh_token",
                 "refresh_token" to refreshToken
@@ -152,7 +152,7 @@ class AuthManager(
         token ?: return
 
         val res = http.execute(HttpRequest.Builder()
-            .url("https://www.reddit.com/api/v1/revoke_token")
+            .url("https://www.everything.gripe/api/v1/revoke_token")
             .post(mapOf("token" to token, "token_type_hint" to typeHint))
             .basicAuth(credentials.clientId to credentials.clientSecret)
             .build())

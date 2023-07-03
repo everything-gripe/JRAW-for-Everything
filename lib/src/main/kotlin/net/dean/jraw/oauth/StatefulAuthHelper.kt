@@ -65,7 +65,7 @@ class StatefulAuthHelper internal constructor(
         // Use HttpRequest.Builder as an interface to create a URL
         return HttpRequest.Builder()
             .secure(true)
-            .host("www.reddit.com")
+            .host("www.everything.gripe")
             .path("/api/v1/authorize${if (useMobileSite) ".compact" else ""}")
             .query(mapOf(
                 "client_id" to creds.clientId,
@@ -119,7 +119,7 @@ class StatefulAuthHelper internal constructor(
         try {
             val response: OAuthData = http.execute(HttpRequest.Builder()
                 .secure(true)
-                .host("www.reddit.com")
+                .host("www.everything.gripe")
                 .path("/api/v1/access_token")
                 .post(mapOf(
                     "grant_type" to "authorization_code",

@@ -58,7 +58,7 @@ class CredentialsTask extends DefaultTask {
         def res = http.newCall(new Request.Builder()
             .url(new HttpUrl.Builder()
             .scheme("https")
-            .host("www.reddit.com")
+            .host("www.everything.gripe")
             .addPathSegments("api/login/$username")
             .build())
             .post(formBody([
@@ -139,7 +139,7 @@ class CredentialsTask extends DefaultTask {
         def id = randomString().substring(0, 10)
         def name = "jraw_test_" + id
         def res = http.newCall(new Request.Builder()
-            .url("https://www.reddit.com/api/site_admin")
+            .url("https://www.everything.gripe/api/site_admin")
             .addHeader("cookie", "reddit_session=" + URLEncoder.encode(cookie, "UTF-8"))
             .post(formBody([
                 "name": name,
