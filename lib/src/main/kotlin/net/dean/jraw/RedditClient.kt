@@ -405,7 +405,7 @@ class RedditClient internal constructor(
      * Creates a SubmissionReference. Note that `id` is NOT a full name (like `t3_6afe8u`), but rather an ID
      * (like `6afe8u`)
      */
-    fun submission(id: String) = SubmissionReference(this, id)
+    fun submission(id: String, subreddit: String) = SubmissionReference(this, id, subreddit)
 
     /**
      * Creates a CommentReference. Note that `id` is NOT a full name (like `t1_6afe8u`), but rather an ID
