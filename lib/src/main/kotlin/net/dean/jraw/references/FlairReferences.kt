@@ -105,7 +105,7 @@ class SubmissionFlairReference internal constructor(reddit: RedditClient, subred
     }
 
     /** Creates a Reference to the subject submission */
-    fun submission() = reddit.submission(subject)
+    fun submission() = reddit.submission(subject, subreddit)
 }
 
 /**

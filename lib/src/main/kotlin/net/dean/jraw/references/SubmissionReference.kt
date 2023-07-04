@@ -13,7 +13,8 @@ import net.dean.jraw.tree.RootCommentNode
 /**
  * A Reference to a link or text submitted to a subreddit, like [this one](https://www.reddit.com/comments/6afe8u).
  */
-class SubmissionReference internal constructor(reddit: RedditClient, id: String, subreddit: String) :
+@JvmOverloads
+class SubmissionReference internal constructor(reddit: RedditClient, id: String, subreddit: String? = null) :
     PublicContributionReference(reddit, id, KindConstants.SUBMISSION) {
 
     /**
